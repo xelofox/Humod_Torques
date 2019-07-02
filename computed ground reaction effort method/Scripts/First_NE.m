@@ -1,6 +1,4 @@
-%% Détermination des forces de réactions du sol
-
-%% M�nage
+%% Clear
 % clear all;
 % close all;
 % clc;
@@ -479,14 +477,6 @@ for k=1:length(q)
     Is_footL(4:6,4:6)=I_footL+m_footL*mrot(c_footL)*transpose(mrot(c_footL));
     
     facc_footL_z=Is_footL*dksi_footL_z+ksi_cross(ksi_footL_z)*(Is_footL*ksi_footL_z);
-    
-    % Conversion des valeurs NaN de centre de pression en zéro
-%     if (isnan(force.grfX_L(i))||isnan(force.grfY_L(i))||isnan(force.grfZ_L(i))||isnan(force.copX_L(i))||isnan(force.copY_L(i))||isnan(force.copZ_L(i)))
-%         freactL=zeros(3,1);pos_reactL=ones(3,1);
-%     else
-%         freactL=[force.grfX_L(i);force.grfY_L(i);force.grfZ_L(i)];
-%         pos_reactL=[force.copX_L(i);force.copY_L(i);force.copZ_L(i)]*1e-3;
-%     end
 
 
 
@@ -530,13 +520,6 @@ for k=1:length(q)
     
     facc_footR_z=Is_footR*dksi_footR_z+ksi_cross(ksi_footR_z)*(Is_footR*ksi_footR_z);
    
-    % Conversion des valeurs NaN de centre de pression en zéro
-%     if (isnan(force.grfX_R(i))||isnan(force.grfY_R(i))||isnan(force.grfZ_R(i))||isnan(force.copX_R(i))||isnan(force.copY_R(i))||isnan(force.copZ_R(i)))
-%         freactR=zeros(3,1);pos_reactR=ones(3,1);
-%     else
-%         freactR=[force.grfX_R(i);force.grfY_R(i);force.grfZ_R(i)];
-%         pos_reactR=[force.copX_R(i);force.copY_R(i);force.copZ_R(i)]*1e-3;
-%     end
     
     fi_footR_z=facc_footR_z-[m_footR*g;cross(c_footR,m_footR*g)];%-[freactR;cross(pos_reactR,freactR)];
     fi_footR_y=fi_footR_z;
@@ -639,5 +622,3 @@ end
 Tau(23:36,:)=[HJX_L; HJY_L; HJZ_L; HJX_R; HJY_R; HJZ_R; KJZ_L; KJZ_R; AJX_L; AJY_L; AJZ_L; AJX_R; AJY_R; AJZ_R];
 Tau(1:6,:)=[TpBJX; TpBJY; TpBJZ; TrBJX; TrBJY; TrBJZ];
 Tau(7:22,:)=[LNJX; LNJY; LNJZ; SJX_L; SJY_L; SJZ_L; SJX_R; SJY_R; SJZ_R; EJZ_L; EJZ_R; ULJX; ULJY; ULJZ; LLJX; LLJZ];
-%save ('Tau_NE_nf', 'Tau_NE_nf');
-%clear -regexp ^ksi ^pos ^fi ^facc ^c_ ^Is_ ^I_ ^R_ ^psi ^u_ ^m_ ^d_ ksi_ ^dp ^dr ^ddp ^ddr pBJX pBJY pBJZ rBJX rBJY rBJZ rLNJX rLNJY rLNJZ rSJX_L rSJY_L rSJZ_L rSJX_R rSJY_R rSJZ_R rEJZ_L rEJZ_R rULJX rULJY rULJZ rLLJX rLLJZ rHJX_L rHJY_L rHJZ_L rHJX_R rHJY_R rHJZ_R rKJZ_L rKJZ_R rAJX_L rAJY_L rAJZ_L rAJX_R rAJY_R rAJZ_R dpBJX dpBJY dpBJZ drBJX drBJY drBJZ drLNJX drLNJY drLNJZ drSJX_L drSJY_L drSJZ_L drSJX_R drSJY_R drSJZ_R drEJZ_L drEJZ_R drULJX drULJY drULJZ drLLJX drLLJZ drHJX_L drHJY_L drHJZ_L drHJX_R drHJY_R drHJZ_R drKJZ_L drKJZ_R drAJX_L drAJY_L drAJZ_L drAJX_R drAJY_R drAJZ_R

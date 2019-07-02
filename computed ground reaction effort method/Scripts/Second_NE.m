@@ -382,13 +382,6 @@ for k=1:length(q)
     
     facc_footL_z=Is_footL*dksi_footL_z+ksi_cross(ksi_footL_z)*(Is_footL*ksi_footL_z);
     
-%     if (isnan(force.grfX_L(i))||isnan(force.grfY_L(i))||isnan(force.grfZ_L(i))||isnan(force.copX_L(i))||isnan(force.copY_L(i))||isnan(force.copZ_L(i)))
-%         freactL=zeros(3,1);mreactL=zeros(3,1);
-%     else
-%         freactL=Freact(:,k);
-%         mreactL=Mreact(:,k);
-%     end
-    
     fi_footL_z=facc_footL_z-[m_footL*g;cross(c_footL,m_footL*g)]-[freactL(1:3,k);mreactL(1:3,k)+cross(pos_LLJ,freactL(1:3,k))];
     fi_footL_y=fi_footL_z;
     fi_footL_x=fi_footL_y;
@@ -428,14 +421,7 @@ for k=1:length(q)
     Is_footR(4:6,4:6)=I_footR+m_footR*mrot(c_footR)*transpose(mrot(c_footR));
     
     facc_footR_z=Is_footR*dksi_footR_z+ksi_cross(ksi_footR_z)*(Is_footR*ksi_footR_z);
-   
-    % Conversion des valeurs NaN de centre de pression en zéro
-%     if (isnan(force.grfX_R(i))||isnan(force.grfY_R(i))||isnan(force.grfZ_R(i))||isnan(force.copX_R(i))||isnan(force.copY_R(i))||isnan(force.copZ_R(i)))
-%         freactR=zeros(3,1);mreactR=zeros(3,1);
-%     else
-%         freactR=Freact(:,k);
-%         mreactR=Mreact(:,k);
-%     end
+
     
     fi_footR_z=facc_footR_z-[m_footR*g;cross(c_footR,m_footR*g)]-[freactR(1:3,k);mreactR(1:3,k)+cross(pos_LLJ,freactR(1:3,k))];
     fi_footR_y=fi_footR_z;
@@ -532,9 +518,8 @@ for k=1:length(q)
     plop(:,k)=fi_pelvis_z;
 end
 
-Tau_NE_corrected(23:36,:)=[HJX_L; HJY_L; HJZ_L; HJX_R; HJY_R; HJZ_R; KJZ_L; KJZ_R; AJX_L; AJY_L; AJZ_L; AJX_R; AJY_R; AJZ_R];
-Tau_NE_corrected(1:6,:)=[TpBJX; TpBJY; TpBJZ; TrBJX; TrBJY; TrBJZ];
-Tau_NE_corrected(7:22,:)=[LNJX; LNJY; LNJZ; SJX_L; SJY_L; SJZ_L; SJX_R; SJY_R; SJZ_R; EJZ_L; EJZ_R; ULJX; ULJY; ULJZ; LLJX; LLJZ];
-Torques=Tau_NE_corrected;
+Torques(23:36,:)=[HJX_L; HJY_L; HJZ_L; HJX_R; HJY_R; HJZ_R; KJZ_L; KJZ_R; AJX_L; AJY_L; AJZ_L; AJX_R; AJY_R; AJZ_R];
+Torques(1:6,:)=[TpBJX; TpBJY; TpBJZ; TrBJX; TrBJY; TrBJZ];
+Torques(7:22,:)=[LNJX; LNJY; LNJZ; SJX_L; SJY_L; SJZ_L; SJX_R; SJY_R; SJZ_R; EJZ_L; EJZ_R; ULJX; ULJY; ULJZ; LLJX; LLJZ];
 save (strcat("corrected_torques_",Motion,".mat"), 'Torques');
 clear -regexp ^ksi ^pos ^fi ^facc ^c_ ^Is_ ^I_ ^R_ ^psi ^u_ ^m_ ^d_ ksi_ ^dp ^dr ^ddp ^ddr pBJX pBJY pBJZ rBJX rBJY rBJZ rLNJX rLNJY rLNJZ rSJX_L rSJY_L rSJZ_L rSJX_R rSJY_R rSJZ_R rEJZ_L rEJZ_R rULJX rULJY rULJZ rLLJX rLLJZ rHJX_L rHJY_L rHJZ_L rHJX_R rHJY_R rHJZ_R rKJZ_L rKJZ_R rAJX_L rAJY_L rAJZ_L rAJX_R rAJY_R rAJZ_R dpBJX dpBJY dpBJZ drBJX drBJY drBJZ drLNJX drLNJY drLNJZ drSJX_L drSJY_L drSJZ_L drSJX_R drSJY_R drSJZ_R drEJZ_L drEJZ_R drULJX drULJY drULJZ drLLJX drLLJZ drHJX_L drHJY_L drHJZ_L drHJX_R drHJY_R drHJZ_R drKJZ_L drKJZ_R drAJX_L drAJY_L drAJZ_L drAJX_R drAJY_R drAJZ_R

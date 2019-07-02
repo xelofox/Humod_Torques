@@ -75,18 +75,8 @@ mreactR(1:3,singleSupport_R) = Mreact(1:3,singleSupport_R);
                     % Estimate forces during double support phase
                     FX21 = FX1(end) * (exp(SX^2) * exp(-((t - (SX * T_ds)) / T_ds).^2) - (0.5 * exp(SX^2) * exp(-(2 - SX)^2)) * t / T_ds);
                     FX22 = Mreact(1,doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex)) - FX21;
-%                     if events.grfCorrection_L(eventIndex_L) || events.grfCorrection_R(eventIndex_R)
-                        FY21 = FY1(end) * (exp(SY^2) * exp(-((t - (SY * T_ds)) / T_ds).^2) - (0.5 * exp(SY^2) * exp(-(2 - SY)^2)) * t / T_ds);
-                        FY22 = Mreact(2,doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex)) - FY21;
-%                     else
-%                         if events.eventStart_L(eventIndex_L) < events.eventStart_R(eventIndex_R)
-%                             FY21 = force.grfY_L(doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex));
-%                             FY22 = force.grfY_R(doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex));
-%                         else
-%                             FY21 = FY_R(doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex));
-%                             FY22 = FY_L(doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex));
-%                         end   
-%                     end
+                    FY21 = FY1(end) * (exp(SY^2) * exp(-((t - (SY * T_ds)) / T_ds).^2) - (0.5 * exp(SY^2) * exp(-(2 - SY)^2)) * t / T_ds);
+                    FY22 = Mreact(2,doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex)) - FY21;
                     FZ21 = FZ1(end) * (exp(SZ^2) * exp(-((t - (SZ * T_ds)) / T_ds).^2) - (0.5 * exp(SZ^2) * exp(-(2 - SZ)^2)) * t / T_ds);
                     FZ22 = Mreact(3,doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex)) - FZ21;
                     

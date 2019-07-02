@@ -188,12 +188,9 @@ end
 
 time = 0:(1 / motion.frameRate):((motion.frames - 1) / motion.frameRate);
 time = time';
-%time = 0:(1 / force.frameRate):((force.frames - 1) / force.frameRate);
-%time = time';
-%time = decimate(time,2);
+
 Data = force.grfX_R;
 Data = Data';
-%Data = decimate(Data,2);
 Data =Data(1:2:length(Data));
 timeseries(Data(:,1), time(:,1),'Name','force');
 save ('grfX_R','ans', '-v7.3');
@@ -315,14 +312,11 @@ delete('CPZ_R.mat');
 %% filtre de janis
 filterHalfOrder = 2;
 filterCutOff = 20;
-%cycleTime = meta.endTime - meta.startTime;
-cycleTime=100;
+cycleTime=motion.frames/motion.frameRate;
 timeStep = cycleTime / force.frames;
 forceTimeStep = 1 /force.frameRate;
-%forceStartIndex = round(meta.startTime * force.frameRate);
-%forceEndIndex = round(meta.endTime * force.frameRate) - 1;
 forceStartIndex = 1 ;
-forceEndIndex = round(100* force.frameRate) ;
+forceEndIndex = round(cycleTime* force.frameRate) ;
 forceFrames = forceEndIndex - forceStartIndex + 1;
 filterPasses = 2;
 filterCorrectedCutOff = filterCutOff / ((2^(1 / filterPasses) - 1)^(1 / 4));
