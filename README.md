@@ -13,6 +13,7 @@ To use these codes on matlab, add to path all the directorie to path.
 This method is available in the Newton-Euler directory, to use it on different motion, just put the Humod motion needed at the beginning in "Motion". 
 
 If you want to use these codes with an other model, you wil need to express: 
+
    -Distance between two joints of a segment in the segment coordinate system.
    
    -Distance between the parent joint of a segment and the center of mass of the segment in the segment coordinate system.
@@ -27,6 +28,7 @@ There is two phases in the loop: Determine velocities and acceleration of each s
 All values are expressed in the world coordinate systeme
 
 During the first step, you need to express:
+
    -Rotation Matrix of Segments coordinate system to the world one.
    
    -Positions of joints in the world coordinates system using : the previous joints, the distance between joint and the previous rotation matrix.
@@ -36,6 +38,7 @@ During the first step, you need to express:
    -Velocities and accelerations using: the previous ones, joints velocities and accelerations, postions of the parent joint and the unit vector of rotation.
 
 During the second step, you need to express:
+
    -The position of the center of mass using : the parent joint, the distance between joint and center of mass and the previous rotation matrix.
    
    -The inertia matrix (of 6x6 dimension) using: segment mass and inertia and the position of the center of mass.
