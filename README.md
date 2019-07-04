@@ -55,3 +55,9 @@ Then articulation torques are get from forces applying on the joint.
 
 
 # Simscape
+This method is available in the Simscape directory, to use it on different motion, just put the Humod motion needed at the beginning. 
+
+The slx file correspond to the model of our biomechanical model. You can create your own model using the same process. "Solid" blocks correspond to segment and "Gimbal Joint" blocks to articulation, just add or remove these blocks as needed.
+Additional solid blocks have been added for visual reason, but they can be replace by "Rigid Transform" blocks. On this model, one can notice 
+
+Then, in Model_Torque.m, you need to set every blocks parameters to create your model.
