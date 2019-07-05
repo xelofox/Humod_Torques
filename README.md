@@ -61,7 +61,7 @@ The slx file correspond to the model of our biomechanical model. You can create 
 Additional solid blocks have been added for visual reason, but they can be replace by "Rigid Transform" blocks. On this model, one can notice 
 
 Then, in Model_Torque.m, you need to set every blocks parameters to create your model. Then, you set all your motions under time series data as shown. 
-For ground reaction forces, a cartesian joint is used to move the center of pressure under feet. You will need to determine before the value of these positions, conversion of vectors from the world coordinates system to feet ones has been done using litteral expression of rotational matrices obtained using the sym librairy of matlab.
+For ground reaction forces, a cartesian joint is used to move the center of pressure under feet. You will need to determine before the value of these positions, conversion of vectors from the world coordinates system to feet ones has been done using litteral expression of rotational matrices obtained using the sym library of matlab.
 
 # Computed ground reaction effort method
 With the previous methods a virtual joint between the world and the body has been add. However efforts have been found on this virtual joint. To vanish them, we modify ground reaction forces:
