@@ -63,6 +63,17 @@ Additional solid blocks have been added for visual reason, but they can be repla
 Then, in Model_Torque.m, you need to set every blocks parameters to create your model. Then, you set all your motions under time series data as shown. 
 For ground reaction forces, a cartesian joint is used to move the center of pressure under feet. You will need to determine before the value of these positions, conversion of vectors from the world coordinates system to feet ones has been done using litteral expression of rotational matrices obtained using the sym librairy of matlab.
 
-# 
+# Computed ground reaction effort method
+With the previous methods a virtual joint between the world and the body has been add. However efforts have been found on this virtual joint. To vanish them, we modify ground reaction forces:
 
+-We first compute Newton-Euler without ground reaction forces
 
+-We distribute these efforts found on the virtual joint on the two feet.
+
+-We compute again Newton-Euler with these new ground reactions forces.
+
+If you want to adapt codes to your model, you will have to simply applied the modification of Newton-Euler (twice).
+
+Codes for the distribution of ground reaction forces has been inspired from https://github.com/wojtusch/HuMoD
+
+/!\ these codes only work for waliking and running.
