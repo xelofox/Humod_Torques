@@ -60,4 +60,9 @@ This method is available in the Simscape directory, to use it on different motio
 The slx file correspond to the model of our biomechanical model. You can create your own model using the same process. "Solid" blocks correspond to segment and "Gimbal Joint" blocks to articulation, just add or remove these blocks as needed.
 Additional solid blocks have been added for visual reason, but they can be replace by "Rigid Transform" blocks. On this model, one can notice 
 
-Then, in Model_Torque.m, you need to set every blocks parameters to create your model.
+Then, in Model_Torque.m, you need to set every blocks parameters to create your model. Then, you set all your motions under time series data as shown. 
+For ground reaction forces, a cartesian joint is used to move the center of pressure under feet. You will need to determine before the value of these positions, conversion of vectors from the world coordinates system to feet ones has been done using litteral expression of rotational matrices obtained using the sym librairy of matlab.
+
+# 
+
+
