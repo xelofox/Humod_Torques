@@ -76,4 +76,4 @@ If you want to adapt codes to your model, you will have to simply applied the mo
 
 Codes for the distribution of ground reaction forces has been inspired from https://github.com/wojtusch/HuMoD
 
-/!\ these codes only work for waliking and running.
+/!\ these codes only work for walking and running.
