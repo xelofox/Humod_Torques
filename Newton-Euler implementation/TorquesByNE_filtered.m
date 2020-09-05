@@ -540,7 +540,7 @@ for k=round(forceStartIndex/2):round(forceEndIndex/2)
     
     
     % footR
-    c_footR=pos_AJR+R_footR0*d_footR_AJR_c; %center of mass of footL
+    c_footR=pos_AJR+R_footR0*d_footR_AJR_c; %center of mass of footR
 
     Is_footR(1:3,1:3)=m_footR*eye(3);
     Is_footR(1:3,4:6)=m_footR*transpose(mrot(c_footR)); Is_footR(4:6,1:3)=m_footR*mrot(c_footR);

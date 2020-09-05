@@ -1,15 +1,15 @@
-%% boucle
+%% loop
 for k=1:length(q)
-    %k % indice motion
-    i=2*(k); % indice force
+%% loading joint motion
+    i=2*(k); 
     t = num2cell(transpose([q(:,k);dq(:,k)]));
     [pBJX pBJY pBJZ rBJX rBJY rBJZ rLNJX rLNJY rLNJZ rSJX_L rSJY_L rSJZ_L rSJX_R rSJY_R rSJZ_R rEJZ_L rEJZ_R rULJX rULJY rULJZ rLLJX rLLJZ rHJX_L rHJY_L rHJZ_L rHJX_R rHJY_R rHJZ_R rKJZ_L rKJZ_R rAJX_L rAJY_L rAJZ_L rAJX_R rAJY_R rAJZ_R dpBJX dpBJY dpBJZ drBJX drBJY drBJZ drLNJX drLNJY drLNJZ drSJX_L drSJY_L drSJZ_L drSJX_R drSJY_R drSJZ_R drEJZ_L drEJZ_R drULJX drULJY drULJZ drLLJX drLLJZ drHJX_L drHJY_L drHJZ_L drHJX_R drHJY_R drHJZ_R drKJZ_L drKJZ_R drAJX_L drAJY_L drAJZ_L drAJX_R drAJY_R drAJZ_R]=deal(t{:});
     t=num2cell(transpose([ddq(:,k)]));
     [ddpBJX ddpBJY ddpBJZ ddrBJX ddrBJY ddrBJZ ddrLNJX ddrLNJY ddrLNJZ ddrSJX_L ddrSJY_L ddrSJZ_L ddrSJX_R ddrSJY_R ddrSJZ_R ddrEJZ_L ddrEJZ_R ddrULJX ddrULJY ddrULJZ ddrLLJX ddrLLJZ ddrHJX_L ddrHJY_L ddrHJZ_L ddrHJX_R ddrHJY_R ddrHJZ_R ddrKJZ_L ddrKJZ_R ddrAJX_L ddrAJY_L ddrAJZ_L ddrAJX_R ddrAJY_R ddrAJZ_R]=deal(t{:});
 
-%% De 1 à nb : cinématique
+%% from 1 to nb : kinematic
     
-    %Monde au pelvis
+    %world to pelvis
     R_pelvis0=rot_z(rBJZ)*rot_y(rBJY)*rot_x(rBJX);
     pos_LLJ=[pBJX; pBJY; pBJZ]*1e-3;
 
@@ -31,7 +31,7 @@ for k=1:length(q)
     dksi_pelvis_z=dksi_pelvis_y+psiz*[cross(pos_LLJ,u_pelvis_z); u_pelvis_z]*drBJZ+[cross(pos_LLJ,u_pelvis_z); u_pelvis_z]*ddrBJZ;
     
      
-    %pelvis à l'abdomen
+    %pelvis to abdomen
     R_abdomen0=rot_z(rLLJZ)*rot_x(rLLJX)*R_pelvis0;
     pos_ULJ=pos_LLJ+R_abdomen0*d_LLJ_ULJ;
     
@@ -49,7 +49,7 @@ for k=1:length(q)
     dksi_abdomen_z=dksi_abdomen_x+psiz*[cross(pos_LLJ,u_abdomen_z); u_abdomen_z]*drLLJZ+[cross(pos_LLJ,u_abdomen_z); u_abdomen_z]*ddrLLJZ;
     
     
-    %abdomen au thorax    
+    %abdomen to thorax     
     R_thorax0=rot_z(rULJZ)*rot_y(rULJY)*rot_x(rULJX)*R_abdomen0;
     pos_LNJ=pos_ULJ+R_thorax0*d_ULJ_LNJ;
 
@@ -71,7 +71,7 @@ for k=1:length(q)
     dksi_thorax_z=dksi_thorax_y+psiz*[cross(pos_ULJ,u_thorax_z); u_thorax_z]*drULJZ+[cross(pos_ULJ,u_thorax_z); u_thorax_z]*ddrULJZ;
     
     
-    %thorax à head
+    %thorax to head
     R_head0=rot_z(rLNJZ)*rot_y(rLNJY)*rot_x(rLNJX)*R_thorax0;
     
     u_head_x=R_thorax0*[1; 0; 0];
@@ -92,7 +92,7 @@ for k=1:length(q)
     dksi_head_z=dksi_head_y+psiz*[cross(pos_LNJ,u_head_z); u_head_z]*drLNJZ+[cross(pos_LNJ,u_head_z); u_head_z]*ddrLNJZ;
     
     
-    %thorax à upperArmL
+    %thorax to upperArmL
     R_upperArmL0=rot_z(rSJZ_L)*rot_y(rSJY_L)*rot_x(rSJX_L)*R_thorax0;
     pos_SJL=pos_LNJ+R_thorax0*d_LNJ_SJL;
     
@@ -114,7 +114,7 @@ for k=1:length(q)
     dksi_upperArmL_z=dksi_upperArmL_y+psiz*[cross(pos_SJL,u_upperArmL_z); u_upperArmL_z]*drSJZ_L+[cross(pos_SJL,u_upperArmL_z); u_upperArmL_z]*ddrSJZ_L;
     
     
-    %upperArmL à lowerArmL
+    %upperArmL to lowerArmL
     R_lowerArmL0=rot_z(rEJZ_L)*R_upperArmL0;
     pos_EJL=pos_SJL+R_upperArmL0*d_SJL_EJL;
     
@@ -128,7 +128,7 @@ for k=1:length(q)
     dksi_lowerArmL_z=dksi_upperArmL_z+psiz*[cross(pos_EJL,u_lowerArmL_z); u_lowerArmL_z]*drEJZ_L+[cross(pos_EJL,u_lowerArmL_z); u_lowerArmL_z]*ddrEJZ_L;    
     
     
-    %thorax à upperArmR
+    %thorax to upperArmR
     R_upperArmR0=rot_z(rSJZ_R)*rot_y(rSJY_R)*rot_x(rSJX_R)*R_thorax0;
     pos_SJR=pos_LNJ+R_thorax0*d_LNJ_SJR;
     
@@ -150,7 +150,7 @@ for k=1:length(q)
     dksi_upperArmR_z=dksi_upperArmR_y+psiz*[cross(pos_SJR,u_upperArmR_z); u_upperArmR_z]*drSJZ_R+[cross(pos_SJR,u_upperArmR_z); u_upperArmR_z]*ddrSJZ_R;
     
     
-    %upperArmR à lowerArmR
+    %upperArmR to lowerArmR
     R_lowerArmR0=rot_z(rEJZ_R)*R_upperArmR0;
     pos_EJR=pos_SJR+R_upperArmR0*d_SJR_EJR;
     
@@ -164,7 +164,7 @@ for k=1:length(q)
     dksi_lowerArmR_z=dksi_upperArmR_z+psiz*[cross(pos_EJR,u_lowerArmR_z); u_lowerArmR_z]*drEJZ_R+[cross(pos_EJR,u_lowerArmR_z); u_lowerArmR_z]*ddrEJZ_R;    
     
     
-    %pelvis à thighL
+    %pelvis to thighL
     R_thighL0=rot_z(rHJZ_L)*rot_y(rHJY_L)*rot_x(rHJX_L)*R_pelvis0;
     pos_HJL=pos_LLJ+R_pelvis0*d_LLJ_HJL;
     
@@ -186,7 +186,7 @@ for k=1:length(q)
     dksi_thighL_z=dksi_thighL_y+psiz*[cross(pos_HJL,u_thighL_z); u_thighL_z]*drHJZ_L+[cross(pos_HJL,u_thighL_z); u_thighL_z]*ddrHJZ_L;
 
     
-    % thighL à shankL
+    % thighL to shankL
     R_shankL0=rot_z(rKJZ_L)*R_thighL0;
     pos_KJL=pos_HJL+R_thighL0*d_HJL_KJL;
     
@@ -200,7 +200,7 @@ for k=1:length(q)
     dksi_shankL_z=dksi_thighL_z+psiz*[cross(pos_KJL,u_shankL_z); u_shankL_z]*drKJZ_L+[cross(pos_KJL,u_shankL_z); u_shankL_z]*ddrKJZ_L;
 
     
-    % shankL à footL
+    % shankL to footL
     R_footL0=rot_z(rAJZ_L)*rot_y(rAJY_L)*rot_x(rAJX_L)*R_shankL0;
     pos_AJL=pos_KJL+R_shankL0*d_KJL_AJL;
 
@@ -222,7 +222,7 @@ for k=1:length(q)
     dksi_footL_z=dksi_footL_y+psiz*[cross(pos_AJL,u_footL_z); u_footL_z]*drAJZ_L+[cross(pos_AJL,u_footL_z); u_footL_z]*ddrAJZ_L;
     
     
-    %pelvis à thighR
+    %pelvis to thighR
     R_thighR0=rot_z(rHJZ_R)*rot_y(rHJY_R)*rot_x(rHJX_R)*R_pelvis0;
     pos_HJR=pos_LLJ+R_pelvis0*d_LLJ_HJR;
     
@@ -244,7 +244,7 @@ for k=1:length(q)
     dksi_thighR_z=dksi_thighR_y+psiz*[cross(pos_HJR,u_thighR_z); u_thighR_z]*drHJZ_R+[cross(pos_HJR,u_thighR_z); u_thighR_z]*ddrHJZ_R;
 
     
-    % thighR à shankR
+    % thighR to shankR
     R_shankR0=rot_z(rKJZ_R)*R_thighR0;
     pos_KJR=pos_HJR+R_thighR0*d_HJR_KJR;
     
@@ -258,7 +258,7 @@ for k=1:length(q)
     dksi_shankR_z=dksi_thighR_z+psiz*[cross(pos_KJR,u_shankR_z); u_shankR_z]*drKJZ_R+[cross(pos_KJR,u_shankR_z); u_shankR_z]*ddrKJZ_R;
 
     
-    % shankR à footR
+    % shankR to footR
     R_footR0=rot_z(rAJZ_R)*rot_y(rAJY_R)*rot_x(rAJX_R)*R_shankR0;
     pos_AJR=pos_KJR+R_shankR0*d_KJR_AJR;
 
@@ -281,10 +281,10 @@ for k=1:length(q)
     
     
 
-%% De nb à 1 : effort
+%% from nb to 1 : effort
    
     % lowerArmL
-    c_lowerArmL=pos_EJL+R_lowerArmL0*d_lowerArmL_EJL_c; %centre de masse lowerArmL
+    c_lowerArmL=pos_EJL+R_lowerArmL0*d_lowerArmL_EJL_c; %center of mass lowerArmL
     
     Is_lowerArmL(1:3,1:3)=m_lowerArmL*eye(3);
     Is_lowerArmL(1:3,4:6)=m_lowerArmL*transpose(mrot(c_lowerArmL)); Is_lowerArmL(4:6,1:3)=m_lowerArmL*mrot(c_lowerArmL);
@@ -296,7 +296,7 @@ for k=1:length(q)
     
     
     % upperArmL
-    c_upperArmL=pos_SJL+R_upperArmL0*d_upperArmL_SJL_c; %centre de masse upperArmL
+    c_upperArmL=pos_SJL+R_upperArmL0*d_upperArmL_SJL_c; %center of mass upperArmL
     
     Is_upperArmL(1:3,1:3)=m_upperArmL*eye(3);
     Is_upperArmL(1:3,4:6)=m_upperArmL*transpose(mrot(c_upperArmL)); Is_upperArmL(4:6,1:3)=m_upperArmL*mrot(c_upperArmL);
@@ -310,7 +310,7 @@ for k=1:length(q)
     
     
     % lowerArmR
-    c_lowerArmR=pos_EJR+R_lowerArmR0*d_lowerArmR_EJR_c; %centre de masse lowerArmR
+    c_lowerArmR=pos_EJR+R_lowerArmR0*d_lowerArmR_EJR_c; %center of mass lowerArmR
     
     Is_lowerArmR(1:3,1:3)=m_lowerArmR*eye(3);
     Is_lowerArmR(1:3,4:6)=m_lowerArmR*transpose(mrot(c_lowerArmR)); Is_lowerArmR(4:6,1:3)=m_lowerArmR*mrot(c_lowerArmR);
@@ -322,7 +322,7 @@ for k=1:length(q)
     
     
     % upperArmR
-    c_upperArmR=pos_SJR+R_upperArmR0*d_upperArmR_SJR_c; %centre de masse upperArmR
+    c_upperArmR=pos_SJR+R_upperArmR0*d_upperArmR_SJR_c; %center of mass upperArmR
     
     Is_upperArmR(1:3,1:3)=m_upperArmR*eye(3);
     Is_upperArmR(1:3,4:6)=m_upperArmR*transpose(mrot(c_upperArmR)); Is_upperArmR(4:6,1:3)=m_upperArmR*mrot(c_upperArmR);
@@ -336,7 +336,7 @@ for k=1:length(q)
     
     
     %head
-    c_head=pos_LNJ+R_head0*d_head_LNJ_c; %centre de masse tête
+    c_head=pos_LNJ+R_head0*d_head_LNJ_c; %center of mass head
 
     Is_head(1:3,1:3)=m_head*eye(3);
     Is_head(1:3,4:6)=m_head*transpose(mrot(c_head)); Is_head(4:6,1:3)=m_head*mrot(c_head);
@@ -349,7 +349,7 @@ for k=1:length(q)
     fi_head_x=fi_head_y;
     
     %thorax
-    c_thorax=pos_LNJ+R_thorax0*d_thorax_LNJ_c; %centre de masse thorax
+    c_thorax=pos_LNJ+R_thorax0*d_thorax_LNJ_c; %center of mass thorax
     
     Is_thorax(1:3,1:3)=m_thorax*eye(3);
     Is_thorax(1:3,4:6)=m_thorax*transpose(mrot(c_thorax)); Is_thorax(4:6,1:3)=m_thorax*mrot(c_thorax);
@@ -362,7 +362,7 @@ for k=1:length(q)
     fi_thorax_x=fi_thorax_y;
     
     % abdomen 
-    c_abdomen=pos_ULJ+R_abdomen0*d_abdomen_ULJ_c; %centre de masse abdomen
+    c_abdomen=pos_ULJ+R_abdomen0*d_abdomen_ULJ_c; %center of mass abdomen
     
     Is_abdomen(1:3,1:3)=m_abdomen*eye(3);
     Is_abdomen(1:3,4:6)=m_abdomen*transpose(mrot(c_abdomen)); Is_abdomen(4:6,1:3)=m_abdomen*mrot(c_abdomen);
@@ -374,7 +374,7 @@ for k=1:length(q)
     fi_abdomen_x=fi_abdomen_z;
     
     % footL
-    c_footL=pos_AJL+R_footL0*d_footL_AJL_c; %centre de masse du pied gauche
+    c_footL=pos_AJL+R_footL0*d_footL_AJL_c; %center of mass footL
 
     Is_footL(1:3,1:3)=m_footL*eye(3);
     Is_footL(1:3,4:6)=m_footL*transpose(mrot(c_footL)); Is_footL(4:6,1:3)=m_footL*mrot(c_footL);
@@ -388,7 +388,7 @@ for k=1:length(q)
     
     
     % shankL
-    c_shankL=pos_KJL+R_shankL0*d_shankL_KJL_c; %centre de masse du jarret gauche
+    c_shankL=pos_KJL+R_shankL0*d_shankL_KJL_c; %center of mass of shankL
 
     Is_shankL(1:3,1:3)=m_shankL*eye(3);
     Is_shankL(1:3,4:6)=m_shankL*transpose(mrot(c_shankL)); Is_shankL(4:6,1:3)=m_shankL*mrot(c_shankL);
@@ -400,7 +400,7 @@ for k=1:length(q)
     
     
     % thighL
-    c_thighL=pos_HJL+R_thighL0*d_thighL_HJL_c; %centre de masse de la cuisse gauche
+    c_thighL=pos_HJL+R_thighL0*d_thighL_HJL_c; %center of mass of thighL
 
     Is_thighL(1:3,1:3)=m_thighL*eye(3);
     Is_thighL(1:3,4:6)=m_thighL*transpose(mrot(c_thighL)); Is_thighL(4:6,1:3)=m_thighL*mrot(c_thighL);
@@ -414,7 +414,7 @@ for k=1:length(q)
     
     
     % footR
-    c_footR=pos_AJR+R_footR0*d_footR_AJR_c; %centre de masse du pied gauche
+    c_footR=pos_AJR+R_footR0*d_footR_AJR_c; %center of mass of footR
 
     Is_footR(1:3,1:3)=m_footR*eye(3);
     Is_footR(1:3,4:6)=m_footR*transpose(mrot(c_footR)); Is_footR(4:6,1:3)=m_footR*mrot(c_footR);
@@ -429,7 +429,7 @@ for k=1:length(q)
     
     
     % shankR
-    c_shankR=pos_KJR+R_shankR0*d_shankR_KJR_c; %centre de masse du jarret gauche
+    c_shankR=pos_KJR+R_shankR0*d_shankR_KJR_c; %center of mass of shankR
 
     Is_shankR(1:3,1:3)=m_shankR*eye(3);
     Is_shankR(1:3,4:6)=m_shankR*transpose(mrot(c_shankR)); Is_shankR(4:6,1:3)=m_shankR*mrot(c_shankR);
@@ -441,7 +441,7 @@ for k=1:length(q)
     
     
     % thighR
-    c_thighR=pos_HJR+R_thighR0*d_thighR_HJR_c; %centre de masse de Ra cuisse gauche
+    c_thighR=pos_HJR+R_thighR0*d_thighR_HJR_c; %center of mass of thighR 
 
     Is_thighR(1:3,1:3)=m_thighR*eye(3);
     Is_thighR(1:3,4:6)=m_thighR*transpose(mrot(c_thighR)); Is_thighR(4:6,1:3)=m_thighR*mrot(c_thighR);
@@ -455,7 +455,7 @@ for k=1:length(q)
     
         
     % pelvis
-    c_pelvis=pos_LLJ+R_pelvis0*d_pelvis_LLJ_c; %centre de masse pelvis
+    c_pelvis=pos_LLJ+R_pelvis0*d_pelvis_LLJ_c; %center of mass pelvis
 
     Is_pelvis(1:3,1:3)=m_pelvis*eye(3);
     Is_pelvis(1:3,4:6)=m_pelvis*transpose(mrot(c_pelvis)); Is_pelvis(4:6,1:3)=m_pelvis*mrot(c_pelvis);
@@ -468,7 +468,7 @@ for k=1:length(q)
     fi_pelvis_x=fi_pelvis_y;
     
     
-%% Récupération des couples
+%% Torques
     KJZ_L(k)=transpose([cross(pos_KJL,u_shankL_z); u_shankL_z])*fi_shankL_z;
     KJZ_R(k)=transpose([cross(pos_KJR,u_shankR_z); u_shankR_z])*fi_shankR_z;
     
@@ -515,7 +515,7 @@ for k=1:length(q)
     LLJZ(k)=transpose([cross(pos_LLJ,u_abdomen_z); u_abdomen_z])*fi_abdomen_z;
     LLJX(k)=transpose([cross(pos_LLJ,u_abdomen_x); u_abdomen_x])*fi_abdomen_x;
     
-    plop(:,k)=fi_pelvis_z;
+    Pelvis_force(:,k)=fi_pelvis_z;
 end
 
 Torques(23:36,:)=[HJX_L; HJY_L; HJZ_L; HJX_R; HJY_R; HJZ_R; KJZ_L; KJZ_R; AJX_L; AJY_L; AJZ_L; AJX_R; AJY_R; AJZ_R];
