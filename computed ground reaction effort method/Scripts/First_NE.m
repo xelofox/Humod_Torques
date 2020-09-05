@@ -35,7 +35,7 @@ d_head_LNJ_c=[head.comX;head.comY;head.comZ]*1e-3;
 
 %inter-joint distances
 d_LLJ_ULJ=abdomen.relativePosition.LLJ*1e-3;
-d_ULJ_LNJ=[0;thorax.segmentLengthY;0]*1e-3; %valeur probablement pas tout à fait exact mais non trouvée dans la doc
+d_ULJ_LNJ=[0;thorax.segmentLengthY;0]*1e-3; 
 d_LNJ_SJR=thorax.relativePosition.SJ_R*1e-3;
 d_LNJ_SJL=thorax.relativePosition.SJ_L*1e-3;
 d_SJL_EJL=upperArm_L.relativePosition.EJ_L*1e-3;
