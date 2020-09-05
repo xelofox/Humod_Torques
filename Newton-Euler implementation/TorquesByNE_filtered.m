@@ -15,15 +15,14 @@ if file=="6.mat"
     load('6_force.mat');
 end
 
-%% Filter for ground reaction forces loading
+%% Filter for ground reaction forces loading (used by Humod database author)
 filterHalfOrder = 2;
 filterCutOff = 20;
-%cycleTime = meta.endTime - meta.startTime;
+
 cycleTime=motion.frames/motion.frameRate;
 timeStep = cycleTime / force.frames;
 forceTimeStep = 1 /force.frameRate;
-%forceStartIndex = round(meta.startTime * force.frameRate);
-%forceEndIndex = round(meta.endTime * force.frameRate) - 1;
+
 forceStartIndex = 1 ;
 forceEndIndex = round(cycleTime* force.frameRate) ;
 forceFrames = forceEndIndex - forceStartIndex + 1;
