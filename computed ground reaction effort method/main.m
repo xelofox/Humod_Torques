@@ -1,4 +1,4 @@
-% /!\  AJOUTER HuMoD-Master au path
+% /!\  Add HuMoD-Master to the path
 
 Motion="1.2";
 
