@@ -41,7 +41,7 @@ force.grfZ_R=    filtfilt(filterB, filterA, force.grfZ_R(forceStartIndex:forceEn
 
 
 %% Model parameters use
-%joint-centerofmass positions 
+%joint-center of mass positions 
 d_pelvis_LLJ_c=[pelvis.comX;pelvis.comY;pelvis.comZ]*1e-3;
 d_abdomen_ULJ_c=[abdomen.comX;abdomen.comY;abdomen.comZ]*1e-3;
 d_thorax_LNJ_c=[thorax.comX;thorax.comY;thorax.comZ]*1e-3;
@@ -59,7 +59,7 @@ d_head_LNJ_c=[head.comX;head.comY;head.comZ]*1e-3;
 
 %inter-joint distances
 d_LLJ_ULJ=-abdomen.relativePosition.LLJ*1e-3;
-d_ULJ_LNJ=[0;thorax.segmentLengthY;0]*1e-3; %valeur probablement pas tout à fait exact mais non trouvée dans la doc
+d_ULJ_LNJ=[0;thorax.segmentLengthY;0]*1e-3; 
 d_LNJ_SJR=thorax.relativePosition.SJ_R*1e-3;
 d_LNJ_SJL=thorax.relativePosition.SJ_L*1e-3;
 d_SJL_EJL=upperArm_L.relativePosition.EJ_L*1e-3;
@@ -117,6 +117,7 @@ g=[0; -9.81; 0];
 
 %% loop
 for k=round(forceStartIndex/2):round(forceEndIndex/2)
+%% loading joint motion
     i=2*(k-round(forceStartIndex/2)+1); %force indice
     t = num2cell(transpose([q(:,k);dq(:,k)]));
     [pBJX pBJY pBJZ rBJX rBJY rBJZ rLNJX rLNJY rLNJZ rSJX_L rSJY_L rSJZ_L rSJX_R rSJY_R rSJZ_R rEJZ_L rEJZ_R rULJX rULJY rULJZ rLLJX rLLJZ rHJX_L rHJY_L rHJZ_L rHJX_R rHJY_R rHJZ_R rKJZ_L rKJZ_R rAJX_L rAJY_L rAJZ_L rAJX_R rAJY_R rAJZ_R dpBJX dpBJY dpBJZ drBJX drBJY drBJZ drLNJX drLNJY drLNJZ drSJX_L drSJY_L drSJZ_L drSJX_R drSJY_R drSJZ_R drEJZ_L drEJZ_R drULJX drULJY drULJZ drLLJX drLLJZ drHJX_L drHJY_L drHJZ_L drHJX_R drHJY_R drHJZ_R drKJZ_L drKJZ_R drAJX_L drAJY_L drAJZ_L drAJX_R drAJY_R drAJZ_R]=deal(t{:});
