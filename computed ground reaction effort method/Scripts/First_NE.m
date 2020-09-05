@@ -3,10 +3,8 @@
 % close all;
 % clc;
 %use subs(fcft, old, new)
-%% D�finition des variables et des param�tres du mod�le
+%% model parameters and motion loading
 
-
-%appeler Parameters.mat
 load('Parameters.mat')
 file=strcat(Motion,".mat");
 load(file);
@@ -18,9 +16,8 @@ end
 
 
 
-%'calcul des paramètres'
-%% Param�tres du mod�le
-%positions liaison-centremasse
+%% Model parameters use
+%joint-center of mass positions 
 d_pelvis_LLJ_c=[pelvis.comX;pelvis.comY;pelvis.comZ]*1e-3;
 d_abdomen_ULJ_c=[abdomen.comX;abdomen.comY;abdomen.comZ]*1e-3;
 d_thorax_LNJ_c=[thorax.comX;thorax.comY;thorax.comZ]*1e-3;

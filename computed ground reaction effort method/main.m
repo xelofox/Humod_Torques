@@ -4,10 +4,10 @@ Motion="1.2";
 
 'First_NE'
 First_NE;
-'Force_separation'
-Force_separation;
-'Moment_separation'
-Moment_separation;
+'Forces_separation'
+Forces_separation;
+'Torques_separation'
+Torques_separation;
 'Second_NE'
 Second_NE;
 

@@ -14,7 +14,7 @@
         subjectVelocity = treadmillVelocity + relativeVelocity;
         clear vectorASIS_L vectorASIS_R
 
-% Separate forces during single support phase
+% Separate torques during single support phase
 mreactL = zeros(3, motion.frames);
 mreactR = zeros(3, motion.frames);
 singleSupport_L = logical(bitand(events.contactPhase_L, ~events.contactPhase_R));
@@ -24,7 +24,7 @@ singleSupport_R = logical(bitand(~events.contactPhase_L, events.contactPhase_R))
 singleSupport_R=singleSupport_R(1:2:force.frames);
 mreactR(1:3,singleSupport_R) = Mreact(1:3,singleSupport_R);
 
-% Separate forces during double support phase according to [Villeger2014]
+% Separate torques during double support phase according to [Villeger2014]
             doubleSupport = logical(bitand(events.contactPhase_L, events.contactPhase_R));
             doubleSupport=doubleSupport(1:2:force.frames);
             if any(doubleSupport)
@@ -72,7 +72,7 @@ mreactR(1:3,singleSupport_R) = Mreact(1:3,singleSupport_R);
                     SY = -0.398 + 0.149 * V_F + 1.064 * 2 * T_ds + 0.043 * FX_i - 0.014 * FX_max + 0.036 * FZ_max + 0.011 * FY_i - 0.001 * FY_slope - 0.026 * FY_max;
                     SZ = 0.691 - 0.313 * V_F - 2.867 * 2 * T_ds - 0.121 * FX_i + 0.083 * FX_max + 0.007 * FZ_slope + 0.022 * FY_i - 0.002 * FY_slope;
                     
-                    % Estimate forces during double support phase
+                    % Estimate torques during double support phase
                     FX21 = FX1(end) * (exp(SX^2) * exp(-((t - (SX * T_ds)) / T_ds).^2) - (0.5 * exp(SX^2) * exp(-(2 - SX)^2)) * t / T_ds);
                     FX22 = Mreact(1,doubleSupportStart(doubleSupportIndex):doubleSupportEnd(doubleSupportIndex)) - FX21;
                     FY21 = FY1(end) * (exp(SY^2) * exp(-((t - (SY * T_ds)) / T_ds).^2) - (0.5 * exp(SY^2) * exp(-(2 - SY)^2)) * t / T_ds);
