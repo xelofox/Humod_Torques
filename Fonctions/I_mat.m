@@ -1,3 +1,4 @@
+%Establish the symetric matrix.
 function I=I_mat(Ixx,Iyy,Izz,Ixy,Ixz,Iyz)
 I=[Ixx Ixy Ixz
    Ixy Iyy Iyz

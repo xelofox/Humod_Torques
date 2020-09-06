@@ -1,3 +1,5 @@
+%determination the position of the center of pressure in the world
+%coordinate system.
 function cpLR= c_pressure(q)
 %load(file);
 %load('c_footL.mat');
