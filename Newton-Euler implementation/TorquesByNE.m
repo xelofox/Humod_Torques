@@ -4,7 +4,11 @@
 % clc;
 %use subs(fcft, old, new)
 %% model parameters and motion loading
-
+% Code explained in part 6.2
+    %6.2.1 : Data entry from line 13 to 106
+    %6.2.2 : Data entry from line 13 to 106
+    %6.2.3 : Data entry from line 13 to 106
+    %6.2.4 : Data entry from line 13 to 106
 
 load('Parameters.mat')
 Motion="1.2";
@@ -102,7 +106,7 @@ for k=1:length(q)
     [ddpBJX ddpBJY ddpBJZ ddrBJX ddrBJY ddrBJZ ddrLNJX ddrLNJY ddrLNJZ ddrSJX_L ddrSJY_L ddrSJZ_L ddrSJX_R ddrSJY_R ddrSJZ_R ddrEJZ_L ddrEJZ_R ddrULJX ddrULJY ddrULJZ ddrLLJX ddrLLJZ ddrHJX_L ddrHJY_L ddrHJZ_L ddrHJX_R ddrHJY_R ddrHJZ_R ddrKJZ_L ddrKJZ_R ddrAJX_L ddrAJY_L ddrAJZ_L ddrAJX_R ddrAJY_R ddrAJZ_R]=deal(t{:});
 
 %% from 1 to nb : kinematic
-    
+
     %world to pelvis
     R_pelvis0=rot_z(rBJZ)*rot_y(rBJY)*rot_x(rBJX); % orientation of the pelvis
     pos_LLJ=[pBJX; pBJY; pBJZ]*1e-3;
